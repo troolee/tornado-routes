@@ -1,2 +1,2 @@
 include README.md LICENSE-MIT
-recursive-include examples *.py
+recursive-include *.py
