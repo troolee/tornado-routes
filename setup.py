@@ -14,7 +14,7 @@ setup(
     version = "0.0.2",
     author = "Pavel Reznikov",
     author_email = "pashka.reznikov@gmail.com",
-    description = "URL routings for tornado web server ",
+    description = "URL routings for tornado web server",
     license = "MIT",
     keywords = "routes tornado tornadoweb routings",
     url = "https://github.com/troolee/tornado-routes",
