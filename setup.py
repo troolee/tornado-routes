@@ -21,9 +21,8 @@ setup(
     ],
     license="MIT",
     keywords="routes tornado tornadoweb routings",
-    packages=['six'],
     url="https://github.com/troolee/tornado-routes",
     py_modules=['tornado_routes'],
     long_description=__doc__,
-    install_requires=['tornado'],
+    install_requires=['tornado', 'six'],
 )
