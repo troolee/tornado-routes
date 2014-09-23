@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 #
 # Author: Pavel Reznikov <pashka.reznikov@gmail.com>
+#
 # Created: 23/01/13
 #
 # Id: $Id$
 
 from pprint import pformat
+import operator
 import re
 from tornado import web
 from tornado.web import URLSpec
 import logging
+import six
 
 
 logger = logging.getLogger(__name__)
@@ -23,6 +26,7 @@ def handler_repr(cls):
 
 
 class HandlersList(object):
+
     def __init__(self, prefix, items):
         self.prefix = prefix
         self.items = items
@@ -50,7 +54,7 @@ class HandlersList(object):
 
             if isinstance(r[1], HandlersList):
                 res += r[1].build(route)
-            elif isinstance(r[1], basestring):
+            elif isinstance(r[1], six.string_types):
                 m = r[1].split('.')
                 ms, m, h = '.'.join(m[:-1]), m[-2], m[-1]
                 m = __import__(ms, fromlist=[m], level=0)
@@ -72,7 +76,7 @@ def make_handlers(prefix, *args):
     res = tuple(HandlersList(prefix, args).build())
 
     rr = [(x.regex.pattern, x.handler_class, x.kwargs, x.name) for x in res]
-    logger.debug('\n' + pformat(sorted(rr, lambda a, b: cmp(a[0], b[0])), width=200))
+    logger.debug('\n' + pformat(sorted(rr, key=operator.itemgetter(0)), width=200))
 
     return res
 
@@ -84,7 +88,7 @@ def include(module):
         m = __import__(ms, fromlist=[m], level=0)
         return m
 
-    if isinstance(module, (str, unicode)):
+    if isinstance(module, six.string_types):
         module = load_module(module)
 
     routes = []
